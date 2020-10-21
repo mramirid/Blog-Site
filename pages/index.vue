@@ -30,7 +30,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import PostPreview from '@/components/Posts/PostPreview.vue'
+import PostPreview from '@/components/posts/PostPreview.vue'
 
 export default defineComponent({
   components: {
