@@ -3,12 +3,12 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <post-list :posts="loadedPosts || []" />
+    <post-list :posts="loadedPosts" />
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
 import usePostPreviews from '@/hooks/post-reviews'

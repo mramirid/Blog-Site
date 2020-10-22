@@ -1,6 +1,6 @@
 <template>
   <main class="posts-page">
-    <post-list :posts="loadedPosts || []" />
+    <post-list :posts="loadedPosts" />
   </main>
 </template>
 

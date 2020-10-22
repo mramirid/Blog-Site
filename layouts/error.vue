@@ -18,17 +18,17 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.error-layout .error-page {
+.error-page {
   text-align: center;
 }
 
-.error-layout .error-page a {
+.error-page a {
   text-decoration: none;
   color: red;
 }
 
-.error-layout .error-page a:hover,
-.error-layout .error-page a:active {
+.error-page a:hover,
+.error-page a:active {
   color: salmon;
 }
 </style>
