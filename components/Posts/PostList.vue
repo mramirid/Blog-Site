@@ -1,42 +1,28 @@
 <template>
   <section class="post-list">
-    <post-preview
-      id="1"
-      :is-edit="isEdit"
-      thumbnail="https://nuxtjs.org/nuxt-card.png"
-      title="Hello There!"
-      preview-text="This is my first post"
-    />
-    <post-preview
-      id="2"
-      :is-edit="isEdit"
-      thumbnail="https://nuxtjs.org/nuxt-card.png"
-      title="My second post"
-      preview-text="This is my second post"
-    />
-    <post-preview
-      id="3"
-      :is-edit="isEdit"
-      thumbnail="https://nuxtjs.org/nuxt-card.png"
-      title="Hi!"
-      preview-text="This is my third post"
-    />
+    <post-preview v-for="post in posts" :key="post.id" :post="post" />
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import PostPreview from '@/components/posts/PostPreview.vue'
+import PostPreviewComponent from '@/components/posts/PostPreview.vue'
+import { PostPreview } from '@/models/Post'
 
 export default defineComponent({
+  name: 'PostList',
   components: {
-    PostPreview,
+    PostPreview: PostPreviewComponent,
   },
   props: {
     isEdit: {
       type: Boolean,
       default: false,
+    },
+    posts: {
+      type: Array as PropType<PostPreview[]>,
+      required: true,
     },
   },
 })

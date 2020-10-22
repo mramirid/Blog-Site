@@ -3,46 +3,38 @@
     <article>
       <div
         class="post-thumbnail"
-        :style="{ backgroundImage: `url('${thumbnail}')` }"
+        :style="{ backgroundImage: `url('${post.thumbnailLink}')` }"
       />
       <div class="post-content">
-        <h1>{{ title }}</h1>
-        <p>{{ previewText }}</p>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.previewText }}</p>
       </div>
     </article>
   </nuxt-link>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+
+import { PostPreview } from '@/models/Post'
 
 export default defineComponent({
   name: 'PostPreview',
   props: {
     isEdit: {
       type: Boolean,
-      required: true,
+      default: false,
     },
-    id: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    previewText: {
-      type: String,
-      required: true,
-    },
-    thumbnail: {
-      type: String,
+    post: {
+      type: Object as PropType<PostPreview>,
       required: true,
     },
   },
   setup(props) {
     const postLink = computed(() => {
-      return props.isEdit ? `/admin/${props.id}` : `/posts/${props.id}`
+      return props.isEdit
+        ? `/admin/${props.post.id}`
+        : `/posts/${props.post.id}`
     })
 
     return {
