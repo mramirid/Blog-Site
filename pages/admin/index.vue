@@ -19,6 +19,7 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import PostList from '@/components/posts/PostList.vue'
 
 export default defineComponent({
+  layout: 'admin',
   components: {
     BaseButton,
     PostList,

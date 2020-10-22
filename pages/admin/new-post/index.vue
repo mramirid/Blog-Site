@@ -12,6 +12,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 
 export default defineComponent({
+  layout: 'admin',
   components: {
     AdminPostForm,
   },

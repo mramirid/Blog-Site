@@ -13,6 +13,7 @@ import { InputPost } from '@/models/Post.ts'
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 
 export default defineComponent({
+  layout: 'admin',
   components: {
     AdminPostForm,
   },
