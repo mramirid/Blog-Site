@@ -11,19 +11,16 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
-import usePostPreviews from '@/hooks/post-reviews'
-import { PostPreview } from '@/models/Post'
+import Post from '@/models/Post'
 
 export default defineComponent({
   components: {
     PostList,
   },
   setup() {
-    usePostPreviews()
-
     const { store } = useContext()
     const loadedPosts = computed(() => {
-      return store.getters.loadedPosts as PostPreview[]
+      return store.getters.loadedPosts as Post[]
     })
 
     return {

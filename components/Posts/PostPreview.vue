@@ -16,7 +16,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import { PostPreview } from '@/models/Post'
+import Post from '@/models/Post'
 
 export default defineComponent({
   name: 'PostPreview',
@@ -26,7 +26,7 @@ export default defineComponent({
       default: false,
     },
     post: {
-      type: Object as PropType<PostPreview>,
+      type: Object as PropType<Post>,
       required: true,
     },
   },

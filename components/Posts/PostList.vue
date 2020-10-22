@@ -7,13 +7,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
-import PostPreviewComponent from '@/components/posts/PostPreview.vue'
-import { PostPreview } from '@/models/Post'
+import PostPreview from '@/components/posts/PostPreview.vue'
+import Post from '@/models/Post'
 
 export default defineComponent({
   name: 'PostList',
   components: {
-    PostPreview: PostPreviewComponent,
+    PostPreview,
   },
   props: {
     isEdit: {
@@ -21,7 +21,7 @@ export default defineComponent({
       default: false,
     },
     posts: {
-      type: Array as PropType<PostPreview[]>,
+      type: Array as PropType<Post[]>,
       required: true,
     },
   },

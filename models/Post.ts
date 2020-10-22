@@ -5,19 +5,12 @@ export interface InputPost {
   author: string
 }
 
-export interface PostPreview {
-  id: string
-  title: string
-  thumbnailLink: string
-  previewText: string
-  author: string
-}
-
 export default interface Post {
   id: string
   title: string
   thumbnailLink: string
+  previewText: string
   content: string
   author: string
-  updatedDate: Date | string
+  updatedDate: string
 }
