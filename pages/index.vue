@@ -8,39 +8,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useAsync } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
-import { PostPreview } from '@/models/Post'
+import usePostPreviews from '@/hooks/post-reviews'
 
 export default defineComponent({
   components: {
     PostList,
   },
   setup() {
-    const loadedPosts = useAsync<PostPreview[]>(() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              id: '1',
-              title: 'Hello world',
-              previewText: 'This is my first post!',
-              thumbnailLink: 'https://nuxtjs.org/nuxt-card.png',
-              author: 'mramirid',
-            },
-            {
-              id: '2',
-              title: 'Hi There',
-              previewText: 'This is my second post!',
-              thumbnailLink:
-                'https://vue-view.com/wp-content/uploads/2020/06/Nuxt-js-1024x617.jpg',
-              author: 'amir.hakim',
-            },
-          ])
-        }, 1500)
-      })
-    })
+    const { loadedPosts } = usePostPreviews()
 
     return {
       loadedPosts,

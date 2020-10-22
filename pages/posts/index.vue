@@ -1,6 +1,6 @@
 <template>
   <main class="posts-page">
-    <post-list />
+    <post-list :posts="loadedPosts || []" />
   </main>
 </template>
 
@@ -8,10 +8,18 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
+import usePostPreviews from '@/hooks/post-reviews'
 
 export default defineComponent({
   components: {
     PostList,
+  },
+  setup() {
+    const { loadedPosts } = usePostPreviews()
+
+    return {
+      loadedPosts,
+    }
   },
 })
 </script>
