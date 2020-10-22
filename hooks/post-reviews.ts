@@ -1,16 +1,20 @@
-import { useAsync, useContext } from '@nuxtjs/composition-api'
+import { useContext, useFetch } from '@nuxtjs/composition-api'
 
 import { PostPreview } from '@/models/Post'
 
 export default function usePostPreviews() {
   const context = useContext()
 
-  const loadedPosts = useAsync(async () => {
+  if (!context.store.getters.postsAreEmpty) {
+    return
+  }
+
+  useFetch(async () => {
     try {
-      return await new Promise<PostPreview[]>((resolve, reject) => {
+      return await new Promise((resolve, reject) => {
         setTimeout(() => {
           try {
-            resolve([
+            context.store.commit('setPosts', [
               {
                 id: '1',
                 title: 'Hello world',
@@ -26,7 +30,8 @@ export default function usePostPreviews() {
                   'https://vue-view.com/wp-content/uploads/2020/06/Nuxt-js-1024x617.jpg',
                 author: 'amir.hakim',
               },
-            ])
+            ] as PostPreview[])
+            resolve()
           } catch (error) {
             reject(error)
           }
@@ -36,8 +41,4 @@ export default function usePostPreviews() {
       context.error(error)
     }
   })
-
-  return {
-    loadedPosts,
-  }
 }

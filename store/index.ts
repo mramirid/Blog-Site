@@ -15,6 +15,9 @@ export default function createStore() {
       loadedPosts(state) {
         return state.loadedPosts
       },
+      postsAreEmpty(state) {
+        return state.loadedPosts.length <= 0
+      },
     },
     mutations: {
       setPosts(state, posts: Post[]) {
@@ -22,8 +25,8 @@ export default function createStore() {
       },
     },
     actions: {
-      setPosts(context, posts: Post[]) {
-        context.commit('setPosts', posts)
+      setPosts(vuexContext, posts: Post[]) {
+        vuexContext.commit('setPosts', posts)
       },
     },
   })

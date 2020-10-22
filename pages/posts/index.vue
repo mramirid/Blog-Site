@@ -5,21 +5,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
 import usePostPreviews from '@/hooks/post-reviews'
+import { PostPreview } from '@/models/Post'
 
 export default defineComponent({
   components: {
     PostList,
   },
   setup() {
-    const { loadedPosts } = usePostPreviews()
+    usePostPreviews()
 
     const { store } = useContext()
-    store.dispatch('setPosts', loadedPosts)
-    console.log(store.getters.loadedPosts.value)
+    const loadedPosts = computed(() => {
+      return store.getters.loadedPosts as PostPreview[]
+    })
 
     return {
       loadedPosts,
