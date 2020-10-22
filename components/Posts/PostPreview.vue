@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`/posts/${id}`" class="post-preview">
+  <nuxt-link :to="postLink" class="post-preview">
     <article>
       <div
         class="post-thumbnail"
@@ -14,11 +14,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'PostPreview',
   props: {
+    isEdit: {
+      type: Boolean,
+      required: true,
+    },
     id: {
       type: String,
       required: true,
@@ -35,6 +39,15 @@ export default defineComponent({
       type: String,
       required: true,
     },
+  },
+  setup(props) {
+    const postLink = computed(() => {
+      return props.isEdit ? `/admin/${props.id}` : `/posts/${props.id}`
+    })
+
+    return {
+      postLink,
+    }
   },
 })
 </script>

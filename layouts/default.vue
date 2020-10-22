@@ -1,9 +1,9 @@
 <template>
-  <main>
+  <div>
     <the-header @side-nav-toggle="displaySideNav" />
     <the-side-nav :show="sideNavIsDisplayed" @close="hideSideNav" />
     <nuxt />
-  </main>
+  </div>
 </template>
 
 <script lang="ts">

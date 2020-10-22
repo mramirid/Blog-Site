@@ -1,5 +1,5 @@
 <template>
-  <section class="single-post-page">
+  <main class="single-post-page">
     <section class="post">
       <h1 class="post-title">Title of the Post</h1>
       <div class="post-details">
@@ -8,14 +8,13 @@
       </div>
       <p class="post-content">Content of the Post</p>
     </section>
-
     <section class="feedback">
       <p>
         Let me know what you think about the post, send a mail to
         <a href="mailto:feedback@gmail.com">feedback@gmail.com</a>
       </p>
     </section>
-  </section>
+  </main>
 </template>
 
 <style scoped>

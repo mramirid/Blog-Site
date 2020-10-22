@@ -1,40 +1,22 @@
 <template>
-  <section class="home-page">
+  <main class="home-page">
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-
-    <section class="featured-posts">
-      <post-preview
-        id="1"
-        thumbnail="https://nuxtjs.org/nuxt-card.png"
-        title="Hello There!"
-        preview-text="This is my first post"
-      />
-      <post-preview
-        id="2"
-        thumbnail="https://nuxtjs.org/nuxt-card.png"
-        title="My second post"
-        preview-text="This is my second post"
-      />
-      <post-preview
-        id="3"
-        thumbnail="https://nuxtjs.org/nuxt-card.png"
-        title="Hi!"
-        preview-text="This is my third post"
-      />
-    </section>
-  </section>
+    <post-list />
+  </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import PostPreview from '@/components/posts/PostPreview.vue'
+import PostList from '@/components/posts/PostList.vue'
 
 export default defineComponent({
   components: {
     PostPreview,
+    PostList,
   },
 })
 </script>
@@ -69,14 +51,5 @@ export default defineComponent({
   .intro h1 {
     font-size: 2rem;
   }
-}
-
-.featured-posts {
-  display: flex;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
 }
 </style>
