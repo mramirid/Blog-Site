@@ -1,9 +1,12 @@
-import { useAsync } from '@nuxtjs/composition-api'
+import { useAsync, useContext } from '@nuxtjs/composition-api'
 
 import { PostPreview } from '@/models/Post'
 
 export default function usePostPreviews() {
   const loadedPosts = useAsync<PostPreview[]>(() => {
+    const context = useContext()
+    console.log('context:', context)
+
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([

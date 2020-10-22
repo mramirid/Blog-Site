@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
 import usePostPreviews from '@/hooks/post-reviews'
