@@ -1,7 +1,7 @@
 # Blog-Site
 
 <p align="center">
-  <img src="https://i.ibb.co/ZVdW9yb/Screenshot-2020-10-22-153426.png" alt="SS">
+  <img src="https://i.ibb.co/9hGGfJh/Screenshot-2020-10-22-153426.png" alt="SS">
 </p>
 
 ## Build Setup
