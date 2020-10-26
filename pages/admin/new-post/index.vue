@@ -11,7 +11,7 @@ import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
-import { InputPost } from '@/models/Post'
+import { RawPost } from '@/models/Post'
 
 export default defineComponent({
   layout: 'admin',
@@ -21,7 +21,7 @@ export default defineComponent({
   setup() {
     const { $config } = useContext()
 
-    async function onSubmitted(newPost: InputPost) {
+    async function onSubmitted(newPost: RawPost) {
       try {
         const response = await axios.post(
           `${$config.firebaseUrl}posts.json`,

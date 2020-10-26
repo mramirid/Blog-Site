@@ -14,6 +14,13 @@
       Content
     </base-control-input>
 
+    <base-control-input
+      v-model="editedPost.previewText"
+      control-type="textarea"
+    >
+      Preview Text
+    </base-control-input>
+
     <base-button type="submit">Save</base-button>
 
     <base-button
@@ -35,7 +42,7 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 
-import { InputPost } from '@/models/Post'
+import { RawPost } from '@/models/Post'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseControlInput from '@/components/ui/BaseControlInput.vue'
 
@@ -46,17 +53,18 @@ export default defineComponent({
   },
   props: {
     post: {
-      type: Object as PropType<InputPost>,
+      type: Object as PropType<RawPost>,
       required: false,
     },
   },
   emits: ['submit'],
   setup(props, context) {
-    const editedPost = reactive<InputPost>({
+    const editedPost = reactive<RawPost>({
       author: props.post?.author || '',
       title: props.post?.title || '',
       thumbnailLink: props.post?.thumbnailLink || '',
       content: props.post?.content || '',
+      previewText: props.post?.content || '',
     })
 
     function onSave() {

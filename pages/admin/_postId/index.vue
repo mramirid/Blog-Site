@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from '@nuxtjs/composition-api'
 
-import { InputPost } from '@/models/Post.ts'
+import { RawPost } from '@/models/Post.ts'
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 
 export default defineComponent({
@@ -18,11 +18,13 @@ export default defineComponent({
     AdminPostForm,
   },
   setup() {
-    const loadedPost = reactive<InputPost>({
+    const loadedPost = reactive<RawPost>({
       author: 'Amir Hakim',
       title: 'How to use Nuxt with TypeScript?',
       content: 'Super amazing. Nuxt is awesome!',
       thumbnailLink: 'https://nuxtjs.org/nuxt-card.png',
+      previewText: '',
+      updatedDate: new Date().toDateString(),
     })
 
     return {

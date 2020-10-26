@@ -1,16 +1,12 @@
-export interface InputPost {
+export interface RawPost {
   title: string
   thumbnailLink: string
   content: string
   author: string
+  previewText: string
+  updatedDate: string
 }
 
-export default interface Post {
+export default interface Post extends RawPost {
   id: string
-  title: string
-  thumbnailLink: string
-  previewText: string
-  content: string
-  author: string
-  updatedDate: string
 }
