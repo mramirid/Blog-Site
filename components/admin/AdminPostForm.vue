@@ -65,6 +65,7 @@ export default defineComponent({
       thumbnailLink: props.post?.thumbnailLink || '',
       content: props.post?.content || '',
       previewText: props.post?.content || '',
+      updatedDate: new Date().toString(),
     })
 
     function onSave() {

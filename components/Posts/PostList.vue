@@ -1,6 +1,11 @@
 <template>
   <section class="post-list">
-    <post-preview v-for="post in posts" :key="post.id" :post="post" />
+    <post-preview
+      v-for="post in posts"
+      :key="post.id"
+      :is-edit="isEdit"
+      :post="post"
+    />
   </section>
 </template>
 

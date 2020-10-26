@@ -7,22 +7,34 @@
     </section>
     <section class="existing-posts">
       <h1>Existing Posts</h1>
-      <post-list is-edit />
+      <post-list is-edit :posts="loadedPosts" />
     </section>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import BaseButton from '@/components/ui/BaseButton.vue'
 import PostList from '@/components/posts/PostList.vue'
+import Post from '@/models/Post'
 
 export default defineComponent({
   layout: 'admin',
   components: {
     BaseButton,
     PostList,
+  },
+  setup() {
+    const { store } = useContext()
+
+    const loadedPosts = computed(() => {
+      return store.getters.loadedPosts as Post[]
+    })
+
+    return {
+      loadedPosts,
+    }
   },
 })
 </script>

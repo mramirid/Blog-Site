@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import { RawPost } from '@/models/Post.ts'
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
+import Post from '~/models/Post'
 
 export default defineComponent({
   layout: 'admin',
@@ -18,14 +18,13 @@ export default defineComponent({
     AdminPostForm,
   },
   setup() {
-    const loadedPost = reactive<RawPost>({
-      author: 'Amir Hakim',
-      title: 'How to use Nuxt with TypeScript?',
-      content: 'Super amazing. Nuxt is awesome!',
-      thumbnailLink: 'https://nuxtjs.org/nuxt-card.png',
-      previewText: '',
-      updatedDate: new Date().toDateString(),
-    })
+    const { store, params, error } = useContext()
+
+    const postId = params.value.postId
+    const loadedPost = store.getters.postById(postId) as Post | undefined
+    if (!loadedPost) {
+      error(new Error('Post not found!'))
+    }
 
     return {
       loadedPost,
