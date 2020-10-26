@@ -50,21 +50,22 @@ export default defineComponent({
       required: false,
     },
   },
-  setup(props) {
-    const editedPost = reactive({
+  emits: ['submit'],
+  setup(props, context) {
+    const editedPost = reactive<InputPost>({
       author: props.post?.author || '',
       title: props.post?.title || '',
       thumbnailLink: props.post?.thumbnailLink || '',
       content: props.post?.content || '',
     })
 
+    function onSave() {
+      context.emit('submit', editedPost)
+    }
+
     const {
       app: { router },
     } = useContext()
-
-    function onSave() {
-      console.log(editedPost)
-    }
 
     function onCancel() {
       router?.replace('/admin')

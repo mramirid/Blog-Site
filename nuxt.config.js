@@ -11,7 +11,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'
+        href: 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap',
       },
     ],
   },
@@ -37,4 +37,12 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  publicRuntimeConfig: {
+    firebaseUrl: process.env.VUE_APP_FIREBASE_URL,
+  },
+
+  privateRuntimeConfig: {
+    firebaseKey: process.env.VUE_APP_FIREBASE_KEY,
+  },
 }

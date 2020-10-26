@@ -20,10 +20,6 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit(vuexContext, nuxtContext: Context) {
-    if (!process.client) {
-      console.log(nuxtContext.req)
-    }
-
     try {
       return await new Promise((resolve, reject) => {
         setTimeout(() => {
