@@ -64,7 +64,7 @@ export default defineComponent({
       title: props.post?.title || '',
       thumbnailLink: props.post?.thumbnailLink || '',
       content: props.post?.content || '',
-      previewText: props.post?.content || '',
+      previewText: props.post?.previewText || '',
       updatedDate: new Date().toString(),
     })
 

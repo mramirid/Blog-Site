@@ -8,10 +8,10 @@
 
 <script lang="ts">
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import axios from 'axios'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 import { RawPost } from '@/models/Post'
+import { postsStore, ActionType, AddPostActionPayload } from '@/store/posts'
 
 export default defineComponent({
   layout: 'admin',
@@ -19,17 +19,17 @@ export default defineComponent({
     AdminPostForm,
   },
   setup() {
-    const { $config } = useContext()
+    const { error, app, store, $config } = useContext()
 
     async function onSubmitted(newPost: RawPost) {
       try {
-        const response = await axios.post(
-          `${$config.firebaseUrl}posts.json`,
-          newPost
-        )
-        console.log(response)
-      } catch (error) {
-        console.log(error)
+        await store.dispatch(`${postsStore}/${ActionType.ADD_POST}`, {
+          newPost,
+          firebaseUrl: $config.firebaseUrl,
+        } as AddPostActionPayload)
+        app.router?.replace('/admin')
+      } catch (err) {
+        error(err)
       }
     }
 

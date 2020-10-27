@@ -1,7 +1,7 @@
 <template>
   <main class="admin-post-page">
     <section class="update-form">
-      <admin-post-form :post="loadedPost" />
+      <admin-post-form :post="loadedPost" @submit="onSubmitted" />
     </section>
   </main>
 </template>
@@ -10,7 +10,13 @@
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
-import Post from '~/models/Post'
+import Post, { RawPost } from '@/models/Post'
+import {
+  postsStore,
+  GetterType,
+  ActionType,
+  EditPostActionPayload,
+} from '@/store/posts'
 
 export default defineComponent({
   layout: 'admin',
@@ -18,16 +24,34 @@ export default defineComponent({
     AdminPostForm,
   },
   setup() {
-    const { store, params, error } = useContext()
+    const { store, params, error, $config, app } = useContext()
 
     const postId = params.value.postId
-    const loadedPost = store.getters.postById(postId) as Post | undefined
+
+    const loadedPost = store.getters[`${postsStore}/${GetterType.POST_BY_ID}`](
+      postId
+    ) as Post | undefined
+
     if (!loadedPost) {
       error(new Error('Post not found!'))
     }
 
+    async function onSubmitted(updatedPost: RawPost) {
+      try {
+        await store.dispatch(`${postsStore}/${ActionType.EDIT_POST}`, {
+          updatedPost: { id: postId, ...updatedPost },
+          firebaseUrl: $config.firebaseUrl,
+        } as EditPostActionPayload)
+
+        app.router?.replace('/admin')
+      } catch (err) {
+        error(err)
+      }
+    }
+
     return {
       loadedPost,
+      onSubmitted,
     }
   },
 })

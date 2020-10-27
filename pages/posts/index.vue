@@ -9,6 +9,7 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import PostList from '@/components/posts/PostList.vue'
 import Post from '@/models/Post'
+import { postsStore, GetterType } from '@/store/posts'
 
 export default defineComponent({
   components: {
@@ -17,7 +18,7 @@ export default defineComponent({
   setup() {
     const { store } = useContext()
     const loadedPosts = computed(() => {
-      return store.getters.loadedPosts as Post[]
+      return store.getters[`${postsStore}/${GetterType.LOADED_POSTS}`] as Post[]
     })
 
     return {

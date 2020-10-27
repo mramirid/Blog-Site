@@ -1,27 +1,34 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { Context } from '@nuxt/types'
 
-import Post, { RawPost } from '@/models/Post'
+import { postsStore, ActionType as PostsAction } from './posts'
+import Post, { RawPost } from '~/models/Post'
 
-export const state = () => ({
-  loadedPosts: [] as Post[],
-})
+/*
+ * State
+ */
+export const state = () => ({})
 
 export type RootState = ReturnType<typeof state>
 
-export const getters: GetterTree<RootState, RootState> = {
-  loadedPosts: (state) => state.loadedPosts,
-  postsAreEmpty: (state) => state.loadedPosts.length <= 0,
-  postById: (state) => (id: string) => {
-    return state.loadedPosts.find((post) => post.id === id)
-  },
-}
+/*
+ * Getters
+ */
+export const getters: GetterTree<RootState, RootState> = {}
 
-export const mutations: MutationTree<RootState> = {
-  setPosts: (state, posts: Post[]) => (state.loadedPosts = posts),
-}
+/*
+ * Mutations
+ */
+export const MutationType = {}
 
-interface FirebaseRawPosts {
+export const mutations: MutationTree<RootState> = {}
+
+/*
+ * Actions
+ */
+export const ActionType = {}
+
+export interface FirebaseRawPosts {
   [id: string]: RawPost
 }
 
@@ -40,7 +47,7 @@ export const actions: ActionTree<RootState, RootState> = {
         id: key,
         ...response.data[key],
       }))
-      vuexContext.commit('setPosts', posts)
+      vuexContext.commit(`${postsStore}/${PostsAction.SET_POSTS}`, posts)
     } catch (error) {
       nuxtContext.error(error)
     }

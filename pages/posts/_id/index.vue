@@ -22,6 +22,7 @@
 <script lang="ts">
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
+import { postsStore, GetterType } from '@/store/posts'
 import Post from '~/models/Post'
 
 export default defineComponent({
@@ -29,7 +30,10 @@ export default defineComponent({
     const { store, params, error } = useContext()
 
     const postId = params.value.id
-    const loadedPost = store.getters.postById(postId) as Post | undefined
+    const loadedPost = store.getters[`${postsStore}/${GetterType.POST_BY_ID}`](
+      postId
+    ) as Post | undefined
+
     if (!loadedPost) {
       error(new Error('Post not found!'))
     }
