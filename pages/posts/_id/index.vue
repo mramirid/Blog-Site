@@ -26,6 +26,9 @@ import { postsStore, GetterType } from '@/store/posts'
 import Post from '~/models/Post'
 
 export default defineComponent({
+  head: {
+    title: 'A Blog Post',
+  },
   setup() {
     const { store, params, error } = useContext()
 
