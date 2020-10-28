@@ -83,7 +83,7 @@ export const actions: ActionTree<PostsState, RootState> = {
   },
   async [ActionType.ADD_POST](vuexContext, newPost: RawPost) {
     const response = await this.$axios.post<FirebaseAddPostResponse>(
-      `${process.env.firebaseUrl}/posts.json`,
+      'posts.json',
       newPost
     )
 
@@ -97,10 +97,7 @@ export const actions: ActionTree<PostsState, RootState> = {
     } as Post)
   },
   async [ActionType.EDIT_POST](vuexContext, updatedPost: Post) {
-    await this.$axios.put(
-      `${process.env.firebaseUrl}posts/${updatedPost.id}.json`,
-      updatedPost
-    )
+    await this.$axios.put(`posts/${updatedPost.id}.json`, updatedPost)
     vuexContext.commit(MutationType.EDIT_POST, updatedPost)
   },
 }

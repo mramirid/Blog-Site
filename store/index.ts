@@ -35,9 +35,7 @@ export interface FirebaseRawPosts {
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit(vuexContext, nuxtContext: Context) {
     try {
-      const response = await this.$axios.get<FirebaseRawPosts>(
-        `${nuxtContext.$config.firebaseUrl}posts.json`
-      )
+      const response = await this.$axios.get<FirebaseRawPosts>('posts.json')
 
       if (response.statusText !== 'OK') {
         throw new Error('Could not fetch posts')
