@@ -1,4 +1,6 @@
 export default {
+  ssr: false,
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Blog Site',
@@ -45,4 +47,6 @@ export default {
   privateRuntimeConfig: {
     firebaseKey: process.env.VUE_APP_FIREBASE_KEY,
   },
+
+  loadingIndicator: { name: 'circle', color: 'blue' },
 }
