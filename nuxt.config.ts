@@ -1,4 +1,8 @@
-export default {
+import { NuxtConfig } from '@nuxt/types'
+
+import { name as logMiddleware } from './middleware/log'
+
+const nuxtConfig: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Blog Site',
@@ -42,7 +46,7 @@ export default {
   build: {},
 
   env: {
-    firebaseUrl: process.env.VUE_APP_FIREBASE_URL,
+    firebaseUrl: process.env.VUE_APP_FIREBASE_URL!,
   },
 
   publicRuntimeConfig: {
@@ -59,4 +63,10 @@ export default {
     name: 'page',
     mode: 'out-in',
   },
+
+  router: {
+    middleware: logMiddleware,
+  },
 }
+
+export default nuxtConfig

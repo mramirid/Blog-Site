@@ -1,5 +1,7 @@
 import { defineNuxtMiddleware } from '@nuxtjs/composition-api'
 
-export default defineNuxtMiddleware((context) => {
-  console.log('[Middleware] The log middleware is running:', context)
+export const name = 'log'
+
+export default defineNuxtMiddleware((_) => {
+  console.log('[Middleware] The log middleware is running')
 })
