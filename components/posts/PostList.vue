@@ -15,6 +15,8 @@ import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import PostPreview from '@/components/posts/PostPreview.vue'
 import Post from '@/models/Post'
 
+// TEMP
+
 export default defineComponent({
   name: 'PostList',
   components: {
