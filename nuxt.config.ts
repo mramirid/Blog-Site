@@ -38,32 +38,33 @@ const nuxtConfig: NuxtConfig = {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: ['@nuxtjs/axios'],
+
+  // nuxt/axios Options
   axios: {
-    baseURL: process.env.VUE_APP_FIREBASE_URL,
+    baseURL: process.env.FIREBASE_DB_URL,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
 
-  env: {
-    firebaseUrl: process.env.VUE_APP_FIREBASE_URL!,
-  },
-
+  // Environment Variables ($config object)
   publicRuntimeConfig: {
-    firebaseUrl: process.env.VUE_APP_FIREBASE_URL,
+    firebaseSignUpURL: process.env.FIREBASE_SIGN_UP_URL,
+    firebaseLoginURL: process.env.FIREBASE_SIGN_IN_WITH_PASSWORD_URL,
+    firebaseKey: process.env.FIREBASE_API_KEY,
   },
+  privateRuntimeConfig: {},
 
-  privateRuntimeConfig: {
-    firebaseKey: process.env.VUE_APP_FIREBASE_KEY,
-  },
-
+  // Nuxt Loading Bar
   loading: { color: 'green', height: '5px' },
 
+  // Page transition
   pageTransition: {
     name: 'page',
     mode: 'out-in',
   },
 
+  // Global Routes Middlewares
   router: {
     middleware: logMiddleware,
   },

@@ -1,9 +1,13 @@
 <template>
   <main class="admin-auth-page">
     <section class="auth-container">
-      <form>
-        <base-control-input type="email">E-Mail Address</base-control-input>
-        <base-control-input type="password">Password</base-control-input>
+      <form @submit.prevent="onSubmit">
+        <base-control-input v-model="userAuthInput.email" type="email">
+          E-Mail Address
+        </base-control-input>
+        <base-control-input v-model="userAuthInput.password" type="password">
+          Password
+        </base-control-input>
         <base-button type="submit">
           {{ isLogin ? 'Login' : 'Sign Up' }}
         </base-button>
@@ -21,16 +25,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
+import { authStore, ActionType } from '@/store/auth'
+
+import UserAuthInput from '@/models/UserAuthInput'
 
 export default defineComponent({
   name: 'AdminAuthPage',
   layout: 'admin',
   setup() {
     const isLogin = ref(true)
+    const userAuthInput = reactive<UserAuthInput>({
+      email: '',
+      password: '',
+    })
+
+    const { store } = useContext()
+
+    function onSubmit() {
+      if (!isLogin.value) {
+        store.dispatch(`${authStore}/${ActionType.SIGN_UP}`, userAuthInput)
+      }
+    }
 
     return {
       isLogin,
+      userAuthInput,
+      onSubmit,
     }
   },
 })

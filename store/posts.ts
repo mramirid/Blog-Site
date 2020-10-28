@@ -1,6 +1,7 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 import Post, { RawPost } from '@/models/Post'
+import { FirebaseAddPostResponse } from '@/models/FirebaseDatabase'
 import { RootState } from './index'
 
 /*
@@ -71,10 +72,6 @@ export const ActionType = {
   SET_POSTS: 'setPosts',
   ADD_POST: 'addPosts',
   EDIT_POST: 'editPosts',
-}
-
-interface FirebaseAddPostResponse {
-  name: string
 }
 
 export const actions: ActionTree<PostsState, RootState> = {

@@ -1,8 +1,9 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { Context } from '@nuxt/types'
 
+import Post from '@/models/Post'
+import { FirebaseRawPosts } from '@/models/firebase/FirebaseDatabase'
 import { postsStore, ActionType as PostsAction } from './posts'
-import Post, { RawPost } from '~/models/Post'
 
 /*
  * State
@@ -27,10 +28,6 @@ export const mutations: MutationTree<RootState> = {}
  * Actions
  */
 export const ActionType = {}
-
-export interface FirebaseRawPosts {
-  [id: string]: RawPost
-}
 
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit(vuexContext, nuxtContext: Context) {
