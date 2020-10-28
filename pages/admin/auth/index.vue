@@ -47,10 +47,11 @@ export default defineComponent({
 
     const { store } = useContext()
 
-    function onSubmit() {
-      if (!isLogin.value) {
-        store.dispatch(`${authStore}/${ActionType.SIGN_UP}`, userAuthInput)
-      }
+    async function onSubmit() {
+      await store.dispatch(
+        `${authStore}/${isLogin.value ? ActionType.LOGIN : ActionType.SIGN_UP}`,
+        userAuthInput
+      )
     }
 
     return {
