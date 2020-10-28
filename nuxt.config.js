@@ -1,6 +1,4 @@
 export default {
-  ssr: false,
-
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Blog Site',
@@ -40,6 +38,10 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
 
+  env: {
+    firebaseUrl: process.env.VUE_APP_FIREBASE_URL,
+  },
+
   publicRuntimeConfig: {
     firebaseUrl: process.env.VUE_APP_FIREBASE_URL,
   },
@@ -48,5 +50,5 @@ export default {
     firebaseKey: process.env.VUE_APP_FIREBASE_KEY,
   },
 
-  loading: { color: 'blue', height: '5px' },
+  loading: { color: 'green', height: '5px' },
 }

@@ -77,24 +77,14 @@ interface FirebaseAddPostResponse {
   name: string
 }
 
-export interface AddPostActionPayload {
-  newPost: RawPost
-  firebaseUrl: string
-}
-
-export interface EditPostActionPayload {
-  updatedPost: Post
-  firebaseUrl: string
-}
-
 export const actions: ActionTree<PostsState, RootState> = {
   [ActionType.SET_POSTS](vuexContext, posts: Post[]) {
     vuexContext.commit(MutationType.SET_POSTS, posts)
   },
-  async [ActionType.ADD_POST](vuexContext, payload: AddPostActionPayload) {
+  async [ActionType.ADD_POST](vuexContext, newPost: RawPost) {
     const response = await this.$axios.post<FirebaseAddPostResponse>(
-      `${payload.firebaseUrl}/posts.json`,
-      payload.newPost
+      `${process.env.firebaseUrl}/posts.json`,
+      newPost
     )
 
     if (response.statusText !== 'OK') {
@@ -103,14 +93,14 @@ export const actions: ActionTree<PostsState, RootState> = {
 
     vuexContext.commit(MutationType.ADD_POST, {
       id: response.data.name,
-      ...payload.newPost,
+      ...newPost,
     } as Post)
   },
-  async [ActionType.EDIT_POST](vuexContext, payload: EditPostActionPayload) {
+  async [ActionType.EDIT_POST](vuexContext, updatedPost: Post) {
     await this.$axios.put(
-      `${payload.firebaseUrl}posts/${payload.updatedPost.id}.json`,
-      payload.updatedPost
+      `${process.env.firebaseUrl}posts/${updatedPost.id}.json`,
+      updatedPost
     )
-    vuexContext.commit(MutationType.EDIT_POST, payload.updatedPost)
+    vuexContext.commit(MutationType.EDIT_POST, updatedPost)
   },
 }

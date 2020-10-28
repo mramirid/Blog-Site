@@ -11,7 +11,7 @@ import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 import { RawPost } from '@/models/Post'
-import { postsStore, ActionType, AddPostActionPayload } from '@/store/posts'
+import { postsStore, ActionType } from '@/store/posts'
 
 export default defineComponent({
   layout: 'admin',
@@ -19,14 +19,11 @@ export default defineComponent({
     AdminPostForm,
   },
   setup() {
-    const { error, app, store, $config } = useContext()
+    const { error, app, store } = useContext()
 
     async function onSubmitted(newPost: RawPost) {
       try {
-        await store.dispatch(`${postsStore}/${ActionType.ADD_POST}`, {
-          newPost,
-          firebaseUrl: $config.firebaseUrl,
-        } as AddPostActionPayload)
+        await store.dispatch(`${postsStore}/${ActionType.ADD_POST}`, newPost)
         app.router?.replace('/admin')
       } catch (err) {
         error(err)
