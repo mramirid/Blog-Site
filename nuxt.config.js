@@ -48,5 +48,5 @@ export default {
     firebaseKey: process.env.VUE_APP_FIREBASE_KEY,
   },
 
-  loadingIndicator: { name: 'circle', color: 'blue' },
+  loading: { color: 'blue', height: '5px' },
 }
