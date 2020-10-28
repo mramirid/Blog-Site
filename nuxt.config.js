@@ -51,4 +51,9 @@ export default {
   },
 
   loading: { color: 'green', height: '5px' },
+
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+  },
 }
