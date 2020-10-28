@@ -43,14 +43,8 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { RawPost } from '@/models/Post'
-import BaseButton from '@/components/ui/BaseButton.vue'
-import BaseControlInput from '@/components/ui/BaseControlInput.vue'
 
 export default defineComponent({
-  components: {
-    BaseButton,
-    BaseControlInput,
-  },
   props: {
     post: {
       type: Object as PropType<RawPost>,

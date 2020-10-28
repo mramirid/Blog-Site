@@ -23,16 +23,9 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 
-import BaseControlInput from '@/components/ui/BaseControlInput.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
-
 export default defineComponent({
   name: 'AdminAuthPage',
   layout: 'admin',
-  components: {
-    BaseControlInput,
-    BaseButton,
-  },
   setup() {
     const isLogin = ref(true)
 

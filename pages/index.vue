@@ -10,14 +10,10 @@
 <script lang="ts">
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
-import PostList from '@/components/posts/PostList.vue'
 import Post from '@/models/Post'
 import { postsStore, GetterType } from '@/store/posts'
 
 export default defineComponent({
-  components: {
-    PostList,
-  },
   setup() {
     const { store } = useContext()
     const loadedPosts = computed(() => {
