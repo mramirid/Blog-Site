@@ -71,7 +71,6 @@ export const ActionType = {
   LOGIN: 'signIn',
   SET_LOGOUT_TIMER: 'setLogoutTimer',
   TRY_AUTO_LOGIN: 'tryAutoLogin',
-  AUTO_LOGOUT: 'autoLogout',
   LOGOUT: 'logout',
 }
 
