@@ -17,17 +17,15 @@ import {
   ActionType as PostsActionType,
 } from '@/store/posts'
 import authMiddleware from '@/middleware/auth'
-import useAutoLogoutWatcher from '@/hooks/auto-logout-watcher'
+import checkAuthMiddleware from '@/middleware/check-auth'
 
 export default defineComponent({
   layout: 'admin',
-  middleware: authMiddleware,
+  middleware: [checkAuthMiddleware, authMiddleware],
   components: {
     AdminPostForm,
   },
   setup() {
-    useAutoLogoutWatcher()
-
     const { store, params, error, app } = useContext()
 
     const postId = params.value.postId

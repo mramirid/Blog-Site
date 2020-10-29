@@ -20,7 +20,6 @@ export const authStore = 'auth'
 export const state = () => ({
   userId: null as string | null,
   token: null as string | null,
-  didAutoLogout: false,
 })
 
 export type AuthState = ReturnType<typeof state>
@@ -32,7 +31,6 @@ export const GetterType = {
   USER_ID: 'getUserId',
   TOKEN: 'getToken',
   IS_AUTHENTICATED: 'isAuthenticated',
-  DID_AUTO_LOGOUT: 'didAutoLogout',
 }
 
 export const getters: GetterTree<AuthState, RootState> = {
@@ -45,9 +43,6 @@ export const getters: GetterTree<AuthState, RootState> = {
   [GetterType.IS_AUTHENTICATED](state) {
     return !!state.token
   },
-  [GetterType.DID_AUTO_LOGOUT](state) {
-    return state.didAutoLogout
-  },
 }
 
 /*
@@ -56,20 +51,15 @@ export const getters: GetterTree<AuthState, RootState> = {
 export const MutationType = {
   SET_USER: 'setUser',
   CLEAR_TOKEN: 'clearToken',
-  SET_AUTO_LOGOUT: 'setAutoLogout',
 }
 
 export const mutations: MutationTree<AuthState> = {
   [MutationType.SET_USER](state, userAuthData: AuthState) {
     state.userId = userAuthData.userId
     state.token = userAuthData.token
-    state.didAutoLogout = userAuthData.didAutoLogout
   },
   [MutationType.CLEAR_TOKEN](state) {
     state.token = null
-  },
-  [MutationType.SET_AUTO_LOGOUT](state) {
-    state.didAutoLogout = true
   },
 }
 
@@ -149,16 +139,16 @@ function getUserAuthData(incomingCookie: string | undefined): UserAuthData {
 
 // Clear user auth data from both local storage as well as the cookies
 function clearUserAuthData() {
-  localStorage.removeItem(LocalStorage.USER_ID)
-  localStorage.removeItem(LocalStorage.TOKEN)
-  localStorage.removeItem(LocalStorage.TOKEN_EXPIRATION_DATE)
+  if (process.client) {
+    localStorage.removeItem(LocalStorage.USER_ID)
+    localStorage.removeItem(LocalStorage.TOKEN)
+    localStorage.removeItem(LocalStorage.TOKEN_EXPIRATION_DATE)
+  }
 
   cookie.remove(LocalStorage.USER_ID)
   cookie.remove(LocalStorage.TOKEN)
   cookie.remove(LocalStorage.TOKEN_EXPIRATION_DATE)
 }
-
-let timerId: number
 
 export const actions: ActionTree<AuthState, RootState> = {
   async [ActionType.SIGN_UP](vuexContext, userAuthInput: UserAuthInput) {
@@ -185,10 +175,6 @@ export const actions: ActionTree<AuthState, RootState> = {
         token: response.data.idToken,
         tokenExpirationDate,
       })
-
-      timerId = window.setTimeout(() => {
-        vuexContext.dispatch(ActionType.AUTO_LOGOUT)
-      }, tokenExpirationDuration)
 
       vuexContext.commit(MutationType.SET_USER, {
         userId: response.data.localId,
@@ -219,8 +205,8 @@ export const actions: ActionTree<AuthState, RootState> = {
         throw new Error('Failed to login')
       }
 
-      // const tokenExpirationDuration = 5000 --> for testing auto logout
-      const tokenExpirationDuration = +response.data.expiresIn * 1000
+      const tokenExpirationDuration = 5000
+      // const tokenExpirationDuration = +response.data.expiresIn * 1000
       const tokenExpirationDate = new Date().getTime() + tokenExpirationDuration
 
       saveUserAuthData({
@@ -228,10 +214,6 @@ export const actions: ActionTree<AuthState, RootState> = {
         token: response.data.idToken,
         tokenExpirationDate,
       })
-
-      timerId = window.setTimeout(() => {
-        vuexContext.dispatch(ActionType.AUTO_LOGOUT)
-      }, tokenExpirationDuration)
 
       vuexContext.commit(MutationType.SET_USER, {
         userId: response.data.localId,
@@ -265,34 +247,21 @@ export const actions: ActionTree<AuthState, RootState> = {
         userAuthData.tokenExpirationDate - new Date().getTime()
 
       if (tokenExpirationDate < 0) {
-        return
+        vuexContext.dispatch(ActionType.LOGOUT)
+      } else {
+        vuexContext.commit(MutationType.SET_USER, {
+          userId: userAuthData.userId,
+          token: userAuthData.token,
+          didAutoLogout: false,
+        } as AuthState)
       }
-
-      clearTimeout(timerId)
-      timerId = window.setTimeout(() => {
-        vuexContext.dispatch(ActionType.AUTO_LOGOUT)
-      }, tokenExpirationDate)
-
-      vuexContext.commit(MutationType.SET_USER, {
-        userId: userAuthData.userId,
-        token: userAuthData.token,
-        didAutoLogout: false,
-      } as AuthState)
     }
-  },
-  [ActionType.AUTO_LOGOUT](vuexContext) {
-    vuexContext.dispatch(ActionType.LOGOUT)
-    vuexContext.commit(MutationType.SET_AUTO_LOGOUT)
   },
   [ActionType.LOGOUT](vuexContext) {
     clearUserAuthData()
-
-    clearTimeout(timerId)
-
     vuexContext.commit(MutationType.SET_USER, {
       userId: null,
       token: null,
-      didAutoLogout: false,
     } as AuthState)
   },
 }

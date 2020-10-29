@@ -22,14 +22,12 @@ import Post from '@/models/Post'
 import { postsStore, GetterType as PostsGetterType } from '@/store/posts'
 import { authStore, ActionType as AuthActionType } from '@/store/auth'
 import authMiddleware from '@/middleware/auth'
-import useAutoLogoutWatcher from '@/hooks/auto-logout-watcher'
+import checkAuthMiddleware from '@/middleware/check-auth'
 
 export default defineComponent({
   layout: 'admin',
-  middleware: authMiddleware,
+  middleware: [checkAuthMiddleware, authMiddleware],
   setup() {
-    useAutoLogoutWatcher()
-
     const { store, app } = useContext()
 
     const loadedPosts = computed(() => {

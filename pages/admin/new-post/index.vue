@@ -13,17 +13,15 @@ import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 import { RawPost } from '@/models/Post'
 import { postsStore, ActionType as PostsActionType } from '@/store/posts'
 import authMiddleware from '@/middleware/auth'
-import useAutoLogoutWatcher from '@/hooks/auto-logout-watcher'
+import checkAuthMiddleware from '@/middleware/check-auth'
 
 export default defineComponent({
   layout: 'admin',
-  middleware: authMiddleware,
+  middleware: [checkAuthMiddleware, authMiddleware],
   components: {
     AdminPostForm,
   },
   setup() {
-    useAutoLogoutWatcher()
-
     const { error, app, store } = useContext()
 
     async function onSubmitted(newPost: RawPost) {
