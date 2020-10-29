@@ -4,7 +4,7 @@ export interface UserAuthInput {
   password: string
 }
 
-// User auth data type (for local storage)
+// User auth data type (for local storage & cookie)
 export interface UserAuthData {
   userId: string | null
   token: string | null

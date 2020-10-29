@@ -5,10 +5,10 @@ import { authStore, GetterType as AuthGetterType } from '@/store/auth'
 export const name = 'auth'
 
 export default defineNuxtMiddleware((context) => {
-  const userToken =
-    context.store.getters[`${authStore}/${AuthGetterType.TOKEN}`]
+  const userIsAuthenticated =
+    context.store.getters[`${authStore}/${AuthGetterType.IS_AUTHENTICATED}`]
 
-  if (!userToken) {
+  if (!userIsAuthenticated) {
     context.redirect('/admin/auth')
   }
 })

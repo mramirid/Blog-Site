@@ -11,8 +11,10 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 import TheHeader from '@/components/navigation/TheHeader.vue'
 import TheSideNav from '@/components/navigation/TheSideNav.vue'
+import checkAuthMiddleware from '@/middleware/check-auth'
 
 export default defineComponent({
+  middleware: checkAuthMiddleware,
   components: {
     TheHeader,
     TheSideNav,

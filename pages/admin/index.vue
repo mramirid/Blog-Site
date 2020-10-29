@@ -18,11 +18,14 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import Post from '@/models/Post'
 import { postsStore, GetterType as PostsGetterType } from '@/store/posts'
 import authMiddleware from '@/middleware/auth'
+import useAutoLogoutWatcher from '@/hooks/auto-logout-watcher'
 
 export default defineComponent({
   layout: 'admin',
   middleware: authMiddleware,
   setup() {
+    useAutoLogoutWatcher()
+
     const { store } = useContext()
 
     const loadedPosts = computed(() => {
