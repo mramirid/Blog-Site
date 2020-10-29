@@ -5,7 +5,7 @@ import {
   FirebaseAuthRequestBody,
   FirebaseSigninResponseBody,
 } from '@/models/firebase/FirebaseAuth'
-import UserAuthInput from '@/models/UserAuthInput'
+import { UserAuthInput } from '@/models/UserAuth'
 import { RootState } from './index'
 
 /*
@@ -16,21 +16,37 @@ export const authStore = 'auth'
 /*
  * State
  */
-export const state = () => ({})
+export const state = () => ({
+  token: null as string | null,
+})
 
 export type StoreState = ReturnType<typeof state>
 
 /*
  * Getters
  */
-export const getters: GetterTree<StoreState, StoreState> = {}
+export const GetterType = {
+  TOKEN: 'getToken',
+}
+
+export const getters: GetterTree<StoreState, StoreState> = {
+  [GetterType.TOKEN](state) {
+    return state.token
+  },
+}
 
 /*
  * Mutations
  */
-export const MutationType = {}
+export const MutationType = {
+  SET_TOKEN: 'setToken',
+}
 
-export const mutations: MutationTree<StoreState> = {}
+export const mutations: MutationTree<StoreState> = {
+  [MutationType.SET_TOKEN](state, token: string) {
+    state.token = token
+  },
+}
 
 /*
  * Actions
@@ -41,7 +57,7 @@ export const ActionType = {
 }
 
 export const actions: ActionTree<StoreState, RootState> = {
-  async [ActionType.SIGN_UP](_, userAuthInput: UserAuthInput) {
+  async [ActionType.SIGN_UP](vuexContext, userAuthInput: UserAuthInput) {
     try {
       const response = await this.$axios.post<FirebaseSignupResponseBody>(
         this.app.$config.firebaseSignUpURL + this.app.$config.firebaseKey,
@@ -53,7 +69,7 @@ export const actions: ActionTree<StoreState, RootState> = {
       )
 
       if (response.status < 400) {
-        console.log(response.data)
+        vuexContext.commit(MutationType.SET_TOKEN, response.data.idToken)
       } else {
         throw new Error('Failed to login')
       }
@@ -66,7 +82,7 @@ export const actions: ActionTree<StoreState, RootState> = {
       }
     }
   },
-  async [ActionType.LOGIN](_, userAuthInput: UserAuthInput) {
+  async [ActionType.LOGIN](vuexContext, userAuthInput: UserAuthInput) {
     try {
       const response = await this.$axios.post<FirebaseSigninResponseBody>(
         this.app.$config.firebaseLoginURL + this.app.$config.firebaseKey,
@@ -78,7 +94,7 @@ export const actions: ActionTree<StoreState, RootState> = {
       )
 
       if (response.status < 400) {
-        console.log(response.data)
+        vuexContext.commit(MutationType.SET_TOKEN, response.data.idToken)
       } else {
         throw new Error('Failed to login')
       }

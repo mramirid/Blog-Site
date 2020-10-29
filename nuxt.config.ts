@@ -1,7 +1,5 @@
 import { NuxtConfig } from '@nuxt/types'
 
-import { name as logMiddleware } from './middleware/log'
-
 const nuxtConfig: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -65,8 +63,14 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Global Routes Middlewares
-  router: {
-    middleware: logMiddleware,
+  router: {},
+
+  // Enable Vue Devtools
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true,
+    },
   },
 }
 

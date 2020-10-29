@@ -1,7 +1,8 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 import Post, { RawPost } from '@/models/Post'
-import { FirebaseAddPostResponse } from '@/models/FirebaseDatabase'
+import { FirebaseAddPostResponse } from '@/models/firebase/FirebaseDatabase'
+import { authStore, GetterType as AuthGetterType } from './auth'
 import { RootState } from './index'
 
 /*
@@ -46,8 +47,8 @@ export const getters: GetterTree<PostsState, RootState> = {
  */
 export const MutationType = {
   SET_POSTS: 'setPosts',
-  ADD_POST: 'addPosts',
-  EDIT_POST: 'editPosts',
+  ADD_POST: 'addPost',
+  EDIT_POST: 'editPost',
 }
 
 export const mutations: MutationTree<PostsState> = {
@@ -79,8 +80,11 @@ export const actions: ActionTree<PostsState, RootState> = {
     vuexContext.commit(MutationType.SET_POSTS, posts)
   },
   async [ActionType.ADD_POST](vuexContext, newPost: RawPost) {
+    const userToken =
+      vuexContext.rootGetters[`${authStore}/${AuthGetterType.TOKEN}`]
+
     const response = await this.$axios.post<FirebaseAddPostResponse>(
-      'posts.json',
+      `posts.json?auth=${userToken}`,
       newPost
     )
 
@@ -94,7 +98,12 @@ export const actions: ActionTree<PostsState, RootState> = {
     } as Post)
   },
   async [ActionType.EDIT_POST](vuexContext, updatedPost: Post) {
-    await this.$axios.put(`posts/${updatedPost.id}.json`, updatedPost)
+    const postId = updatedPost.id
+    const userToken =
+      vuexContext.rootGetters[`${authStore}/${AuthGetterType.TOKEN}`]
+
+    await this.$axios.put(`posts/${postId}.json?auth=${userToken}`, updatedPost)
+
     vuexContext.commit(MutationType.EDIT_POST, updatedPost)
   },
 }

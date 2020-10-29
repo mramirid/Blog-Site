@@ -11,10 +11,8 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 import TheHeader from '@/components/navigation/TheHeader.vue'
 import TheSideNav from '@/components/navigation/TheSideNav.vue'
-import logMiddleware from '@/middleware/log'
 
 export default defineComponent({
-  middleware: logMiddleware,
   components: {
     TheHeader,
     TheSideNav,

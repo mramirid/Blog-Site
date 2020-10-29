@@ -9,10 +9,8 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import Post from '@/models/Post'
 import { postsStore, GetterType } from '@/store/posts'
-import logMiddleware from '@/middleware/log'
 
 export default defineComponent({
-  middleware: logMiddleware,
   setup() {
     const { store } = useContext()
     const loadedPosts = computed(() => {

@@ -16,15 +16,19 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import Post from '@/models/Post'
-import { postsStore, GetterType } from '@/store/posts'
+import { postsStore, GetterType as PostsGetterType } from '@/store/posts'
+import authMiddleware from '@/middleware/auth'
 
 export default defineComponent({
   layout: 'admin',
+  middleware: authMiddleware,
   setup() {
     const { store } = useContext()
 
     const loadedPosts = computed(() => {
-      return store.getters[`${postsStore}/${GetterType.LOADED_POSTS}`] as Post[]
+      return store.getters[
+        `${postsStore}/${PostsGetterType.LOADED_POSTS}`
+      ] as Post[]
     })
 
     return {

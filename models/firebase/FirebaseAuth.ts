@@ -34,10 +34,3 @@ export interface FirebaseSigninResponseBody {
   kind: string
   registered: boolean
 }
-
-// Saved user auth data types (in local storage)
-export interface SavedUserAuthData {
-  userId: string | null
-  token: string | null
-  tokenExpirationDate: number | null
-}

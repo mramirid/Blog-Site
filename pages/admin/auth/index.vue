@@ -9,15 +9,15 @@
           Password
         </base-control-input>
         <base-button type="submit">
-          {{ isLogin ? 'Login' : 'Sign Up' }}
+          {{ loginMode ? 'Login' : 'Sign Up' }}
         </base-button>
         <base-button
           type="button"
           btn-style="inverted"
           style="margin-left: 10px"
-          @click="isLogin = !isLogin"
+          @click="loginMode = !loginMode"
         >
-          Switch to {{ isLogin ? 'Signup' : 'Login' }}
+          Switch to {{ loginMode ? 'Signup' : 'Login' }}
         </base-button>
       </form>
     </section>
@@ -31,31 +31,34 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import { authStore, ActionType } from '@/store/auth'
+import { authStore, ActionType as AuthActionType } from '@/store/auth'
 
-import UserAuthInput from '@/models/UserAuthInput'
+import { UserAuthInput } from '@/models/UserAuth'
 
 export default defineComponent({
   name: 'AdminAuthPage',
   layout: 'admin',
   setup() {
-    const isLogin = ref(true)
+    const loginMode = ref(true)
     const userAuthInput = reactive<UserAuthInput>({
       email: '',
       password: '',
     })
 
-    const { store } = useContext()
+    const { store, app } = useContext()
 
     async function onSubmit() {
       await store.dispatch(
-        `${authStore}/${isLogin.value ? ActionType.LOGIN : ActionType.SIGN_UP}`,
+        `${authStore}/${
+          loginMode.value ? AuthActionType.LOGIN : AuthActionType.SIGN_UP
+        }`,
         userAuthInput
       )
+      app.router?.replace('/admin')
     }
 
     return {
-      isLogin,
+      loginMode,
       userAuthInput,
       onSubmit,
     }

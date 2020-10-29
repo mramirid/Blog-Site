@@ -11,10 +11,12 @@ import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 import { RawPost } from '@/models/Post'
-import { postsStore, ActionType } from '@/store/posts'
+import { postsStore, ActionType as PostsActionType } from '@/store/posts'
+import authMiddleware from '@/middleware/auth'
 
 export default defineComponent({
   layout: 'admin',
+  middleware: authMiddleware,
   components: {
     AdminPostForm,
   },
@@ -23,7 +25,10 @@ export default defineComponent({
 
     async function onSubmitted(newPost: RawPost) {
       try {
-        await store.dispatch(`${postsStore}/${ActionType.ADD_POST}`, newPost)
+        await store.dispatch(
+          `${postsStore}/${PostsActionType.ADD_POST}`,
+          newPost
+        )
         app.router?.replace('/admin')
       } catch (err) {
         error(err)

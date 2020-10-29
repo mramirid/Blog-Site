@@ -11,10 +11,16 @@ import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import AdminPostForm from '@/components/admin/AdminPostForm.vue'
 import Post, { RawPost } from '@/models/Post'
-import { postsStore, GetterType, ActionType } from '@/store/posts'
+import {
+  postsStore,
+  GetterType as PostsGetterType,
+  ActionType as PostsActionType,
+} from '@/store/posts'
+import authMiddleware from '@/middleware/auth'
 
 export default defineComponent({
   layout: 'admin',
+  middleware: authMiddleware,
   components: {
     AdminPostForm,
   },
@@ -23,9 +29,9 @@ export default defineComponent({
 
     const postId = params.value.postId
 
-    const loadedPost = store.getters[`${postsStore}/${GetterType.POST_BY_ID}`](
-      postId
-    ) as Post | undefined
+    const loadedPost = store.getters[
+      `${postsStore}/${PostsGetterType.POST_BY_ID}`
+    ](postId) as Post | undefined
 
     if (!loadedPost) {
       error(new Error('Post not found!'))
@@ -33,7 +39,7 @@ export default defineComponent({
 
     async function onSubmitted(updatedPost: RawPost) {
       try {
-        await store.dispatch(`${postsStore}/${ActionType.EDIT_POST}`, {
+        await store.dispatch(`${postsStore}/${PostsActionType.EDIT_POST}`, {
           id: postId,
           ...updatedPost,
         } as Post)

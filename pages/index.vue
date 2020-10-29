@@ -11,13 +11,15 @@
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import Post from '@/models/Post'
-import { postsStore, GetterType } from '@/store/posts'
+import { postsStore, GetterType as PostsGetterType } from '@/store/posts'
 
 export default defineComponent({
   setup() {
     const { store } = useContext()
     const loadedPosts = computed(() => {
-      return store.getters[`${postsStore}/${GetterType.LOADED_POSTS}`] as Post[]
+      return store.getters[
+        `${postsStore}/${PostsGetterType.LOADED_POSTS}`
+      ] as Post[]
     })
 
     return {
