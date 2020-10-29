@@ -91,7 +91,7 @@ enum LocalStorage {
   TOKEN_EXPIRATION_DATE = 'tokenExpiration',
 }
 
-// For storing data in both local storage as well as the cookies
+// For storing user auth data in both local storage as well as the cookies
 function saveUserAuthData(userAuthData: UserAuthData) {
   if (
     userAuthData.userId &&
@@ -114,7 +114,7 @@ function saveUserAuthData(userAuthData: UserAuthData) {
   }
 }
 
-// For extracting data from both local storage as well as the cookies
+// For extracting user auth data from both local storage as well as the cookies
 function getUserAuthData(incomingCookie: string | undefined): UserAuthData {
   const extractCookie = (incomingCookie: string, cookieName: LocalStorage) => {
     return incomingCookie
@@ -147,10 +147,15 @@ function getUserAuthData(incomingCookie: string | undefined): UserAuthData {
   }
 }
 
+// Clear user auth data from both local storage as well as the cookies
 function clearUserAuthData() {
   localStorage.removeItem(LocalStorage.USER_ID)
   localStorage.removeItem(LocalStorage.TOKEN)
   localStorage.removeItem(LocalStorage.TOKEN_EXPIRATION_DATE)
+
+  cookie.remove(LocalStorage.USER_ID)
+  cookie.remove(LocalStorage.TOKEN)
+  cookie.remove(LocalStorage.TOKEN_EXPIRATION_DATE)
 }
 
 let timerId: number
@@ -281,6 +286,7 @@ export const actions: ActionTree<AuthState, RootState> = {
   },
   [ActionType.LOGOUT](vuexContext) {
     clearUserAuthData()
+
     clearTimeout(timerId)
 
     vuexContext.commit(MutationType.SET_USER, {

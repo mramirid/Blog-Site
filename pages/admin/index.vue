@@ -4,6 +4,9 @@
       <base-button @click="$router.push('/admin/new-post')">
         Create Post
       </base-button>
+      <base-button style="margin-left: 10px" @click="onLogout">
+        Logout
+      </base-button>
     </section>
     <section class="existing-posts">
       <h1>Existing Posts</h1>
@@ -17,6 +20,7 @@ import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import Post from '@/models/Post'
 import { postsStore, GetterType as PostsGetterType } from '@/store/posts'
+import { authStore, ActionType as AuthActionType } from '@/store/auth'
 import authMiddleware from '@/middleware/auth'
 import useAutoLogoutWatcher from '@/hooks/auto-logout-watcher'
 
@@ -26,7 +30,7 @@ export default defineComponent({
   setup() {
     useAutoLogoutWatcher()
 
-    const { store } = useContext()
+    const { store, app } = useContext()
 
     const loadedPosts = computed(() => {
       return store.getters[
@@ -34,8 +38,14 @@ export default defineComponent({
       ] as Post[]
     })
 
+    function onLogout() {
+      store.dispatch(`${authStore}/${AuthActionType.LOGOUT}`)
+      app.router?.replace('/admin/auth')
+    }
+
     return {
       loadedPosts,
+      onLogout,
     }
   },
 })
