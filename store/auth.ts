@@ -211,8 +211,8 @@ export const actions: ActionTree<AuthState, RootState> = {
         throw new Error('Failed to login')
       }
 
-      const tokenExpirationDuration = 5000
-      // const tokenExpirationDuration = +response.data.expiresIn * 1000
+      // const tokenExpirationDuration = 5000 --> for testing auto logout
+      const tokenExpirationDuration = +response.data.expiresIn * 1000
       const tokenExpirationDate = new Date().getTime() + tokenExpirationDuration
 
       saveUserAuthData({
