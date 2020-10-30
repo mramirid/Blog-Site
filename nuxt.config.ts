@@ -1,7 +1,4 @@
 import { NuxtConfig } from '@nuxt/types'
-import bodyParser from 'body-parser'
-
-import api from './api/index'
 
 const nuxtConfig: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -25,7 +22,11 @@ const nuxtConfig: NuxtConfig = {
   css: ['@/assets/styles/main.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/core-components.ts', '@/plugins/date-filter.ts'],
+  plugins: [
+    '@/plugins/core-components.ts',
+    '@/plugins/date-filter.ts',
+    { src: '@/plugins/client-init.ts', ssr: false },
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -68,15 +69,6 @@ const nuxtConfig: NuxtConfig = {
   // Global Routes Middlewares
   router: {},
 
-  // Any Express Middleware that we want to run first
-  serverMiddleware: [
-    bodyParser.json(),
-    {
-      path: '/api',
-      handler: api,
-    },
-  ],
-
   // Enable Vue Devtools
   vue: {
     config: {
@@ -84,6 +76,9 @@ const nuxtConfig: NuxtConfig = {
       devtools: true,
     },
   },
+
+  // Single Page Application
+  ssr: false,
 }
 
 export default nuxtConfig

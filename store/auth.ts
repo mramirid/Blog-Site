@@ -7,7 +7,6 @@ import {
   FirebaseSigninResponseBody,
 } from '@/models/firebase/FirebaseAuth'
 import { UserAuthData, UserAuthInput } from '@/models/UserAuth'
-import TrackDataBody from '@/api/models/TrackDataBody'
 import { RootState } from './index'
 
 /*
@@ -226,10 +225,6 @@ export const actions: ActionTree<AuthState, RootState> = {
         token: response.data.idToken,
         didAutoLogout: false,
       } as AuthState)
-
-      await this.$axios.post('http://localhost:3000/api/track-data', {
-        data: 'Authenticated!',
-      } as TrackDataBody)
     } catch (error) {
       switch (error.response.data.error.message) {
         case 'EMAIL_NOT_FOUND':
