@@ -1,4 +1,7 @@
 import { NuxtConfig } from '@nuxt/types'
+import bodyParser from 'body-parser'
+
+import api from './api/index'
 
 const nuxtConfig: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -64,6 +67,15 @@ const nuxtConfig: NuxtConfig = {
 
   // Global Routes Middlewares
   router: {},
+
+  // Any Express Middleware that we want to run first
+  serverMiddleware: [
+    bodyParser.json(),
+    {
+      path: '/api',
+      handler: api,
+    },
+  ],
 
   // Enable Vue Devtools
   vue: {
