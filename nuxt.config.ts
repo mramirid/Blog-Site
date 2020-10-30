@@ -1,4 +1,7 @@
 import { NuxtConfig } from '@nuxt/types'
+import axios from 'axios'
+
+import { FirebaseRawPosts } from './models/firebase/FirebaseDatabase'
 
 const nuxtConfig: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -80,10 +83,22 @@ const nuxtConfig: NuxtConfig = {
   // Single Page Application
   // ssr: false,
 
-  // Generate static website
+  // Generate static website (Automatically generate for the dynamic routes)
   target: 'static',
   generate: {
-    routes: ['/posts/-MKhKABwTWhyoxmQLP3-', '/posts/-MKhrZHXvV-EM1-74tqI'],
+    routes: async () => {
+      const response = await axios.get<FirebaseRawPosts>(
+        `${process.env.FIREBASE_DB_URL}posts.json`
+      )
+      if (response.statusText !== 'OK') {
+        throw new Error('Could not fetch posts')
+      }
+
+      const postURLs = Object.keys(response.data || {}).map((key) => {
+        return `/posts/${key}`
+      })
+      return postURLs
+    },
   },
 }
 

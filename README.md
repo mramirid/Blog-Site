@@ -13,19 +13,19 @@ $ npm install
 # Serve with hot reload at localhost:3000
 $ npm run dev
 
-# Build for production and launch server (Universal)
+# Build universal app for production and launch server
 $ npm run build
 $ npm run start
 
-# Build for production and launch server (SPA)
+# Build SPA for production and launch server
 $ npm run build
 $ npm install -g http-server
-$ cd /dist && http-server -p 8080
+$ cd /dist && http-server -p 3000
 
-# Generate static website
+# Generate static website and lauch server
 $ npm run generate
 $ npm install -g http-server
-$ cd /dist && http-server -p 8080
+$ cd /dist && http-server -p 3000
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
