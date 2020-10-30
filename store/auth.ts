@@ -113,7 +113,7 @@ function getUserAuthData(incomingCookie: string | undefined): UserAuthData {
       ?.split('=')[1]
   }
 
-  if (incomingCookie) {
+  if (process.server && incomingCookie) {
     const userId = extractCookie(incomingCookie, LocalStorage.USER_ID)
     const token = extractCookie(incomingCookie, LocalStorage.TOKEN)
     const tokenExpirationDate = extractCookie(
@@ -126,14 +126,20 @@ function getUserAuthData(incomingCookie: string | undefined): UserAuthData {
       token: token || null,
       tokenExpirationDate: +(tokenExpirationDate || 0),
     }
-  }
-
-  return {
-    userId: localStorage.getItem(LocalStorage.USER_ID),
-    token: localStorage.getItem(LocalStorage.TOKEN),
-    tokenExpirationDate: +(
-      localStorage.getItem(LocalStorage.TOKEN_EXPIRATION_DATE) || 0
-    ),
+  } else if (process.client) {
+    return {
+      userId: localStorage.getItem(LocalStorage.USER_ID),
+      token: localStorage.getItem(LocalStorage.TOKEN),
+      tokenExpirationDate: +(
+        localStorage.getItem(LocalStorage.TOKEN_EXPIRATION_DATE) || 0
+      ),
+    }
+  } else {
+    return {
+      userId: null,
+      token: null,
+      tokenExpirationDate: null,
+    }
   }
 }
 
