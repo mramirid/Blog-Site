@@ -78,7 +78,13 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Single Page Application
-  ssr: false,
+  // ssr: false,
+
+  // Generate static website
+  target: 'static',
+  generate: {
+    routes: ['/posts/-MKhKABwTWhyoxmQLP3-', '/posts/-MKhrZHXvV-EM1-74tqI'],
+  },
 }
 
 export default nuxtConfig
