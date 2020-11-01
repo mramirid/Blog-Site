@@ -36,7 +36,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 - Section 4 - Handling data (Vuex store)
 
-- Section 5 - Connectiong the app to the backend (Firebase realtime database & nuxt/axios)
+- Section 5 - Connecting the app to the backend (Firebase realtime database & nuxt/axios)
 
 - Section 6 - Nuxt config, plugins & modules
 
