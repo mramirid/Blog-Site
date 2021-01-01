@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
-    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/axios": "^5.12.4",
     "@nuxtjs/composition-api": "^0.13.5",
     "body-parser": "^1.19.0",
     "core-js": "^3.6.5",
