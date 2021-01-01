@@ -15,7 +15,7 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/composition-api": "^0.13.5",
     "body-parser": "^1.19.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.1",
     "express": "^4.17.1",
     "js-cookie": "^2.2.1",
     "nuxt": "^2.14.6"
